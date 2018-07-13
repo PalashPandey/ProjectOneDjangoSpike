@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Math input display</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css" integrity="sha256-Z0FmvP1JtDmwVaHpsgu75FrC/SInDnlFWL95M65PCr4=" crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="..\static\mathquill-0.10.1\mathquill.css"/> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- <script src="..\static\mathquill-0.10.1\mathquill.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js" integrity="sha256-dxKVPdWCaZTdphHQqQEc0GSDAVZJCxshwn3ZrvHtqgo=" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+
+    <h1>
+      For the expression - x**2 + 5*x + 6
+    </h1>
+  
+    <p> The simplified expression :  </p>
+    <p id='simplified_exp'> {{ simplified_exp }} </p>
+
+    <p> The factorized expression :  </p>
+    <p id='factorized_exp'> {{ factorized_exp }} </p>
+
+
+<p>Type math here: <span id="math-field"></span></p>
+<p>LaTeX of what you typed: <span id="latex"></span></p>
+
+<script>
+var mathFieldSpan = document.getElementById('math-field');
+var latexSpan = document.getElementById('latex');
+
+var MQ = MathQuill.getInterface(2); // for backcompat
+var mathField = MQ.MathField(mathFieldSpan, {
+  spaceBehavesLikeTab: true, // configurable
+  handlers: {
+    edit: function() { // useful event handlers
+      latexSpan.textContent = mathField.latex(); // simple API
+    }
+  }
+});
+</script>
+
+<p> <b> Static MathQuill result for Sympy output </b> </p>
+<p> Output for the factorized Sympy output </p>
+<p>Solve <span id="problem"> </span>.</p>
+
+<script type="text/javascript">
+  var facto_comma = document.getElementById('factorized_exp').textContent;
+  var facto = facto_comma.replace(',' , '')
+  document.getElementById('problem').innerHTML = facto;
+</script>
+
+<script>
+  var problemSpan = document.getElementById('problem');
+  MQ.StaticMath(problemSpan);
+</script>
+<p> Output for the simplified Sympy output </p>
+<p>Solve <span id="problemSimplified">\lim_{\left(x\right)\to\left(3\right)}\left(4x\right)</span>.</p>
+
+<script type="text/javascript">
+  var simpli_comma = document.getElementById('simplified_exp').textContent;
+  var find = ',';
+  var  re = new RegExp(find, 'g');
+  var simpli = simpli_comma.replace(',' , '')
+  simpli = simpli.replace(',' , '')
+  console.log(simpli)
+  document.getElementById('problemSimplified').innerHTML = simpli;
+</script>
+
+<script>
+  var problemSimplifiedSpan = document.getElementById('problemSimplified');
+  MQ.StaticMath(problemSimplifiedSpan);
+</script>
+
+
+
+  </body>
+
+</html>
